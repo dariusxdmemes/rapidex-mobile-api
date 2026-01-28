@@ -13,12 +13,14 @@ class Order(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_empl", nullable = true)
+    @JoinColumn(name = "id_emp", nullable = true)
     var employee: Employee? = null,
 
+    @Column(name = "prep_date", nullable = true)
     @JsonFormat(pattern = "dd-MM-yyyy/HH-mm-ss")
-    var prepData: LocalDateTime? = null,
+    var prepDate: LocalDateTime? = null,
 
+    @Column(name = "dispatch_date", nullable = true)
     @JsonFormat(pattern = "dd-MM-yyyy/HH-mm-ss")
-    var dispatchData: LocalDateTime? = null
+    var dispatchDate: LocalDateTime? = null
 )
