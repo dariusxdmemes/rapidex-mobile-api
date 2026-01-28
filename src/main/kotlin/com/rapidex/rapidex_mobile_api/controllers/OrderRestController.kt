@@ -1,0 +1,16 @@
+package com.rapidex.rapidex_mobile_api.controllers
+
+import com.rapidex.rapidex_mobile_api.service.OrderService
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping("api/orders")
+class OrderRestController(private val service: OrderService) {
+
+    @GetMapping
+    fun getPendingOrders() = service.getPendingOrders()
+
+
+}
