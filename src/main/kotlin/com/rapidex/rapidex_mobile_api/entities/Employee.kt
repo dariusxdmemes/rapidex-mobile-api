@@ -9,6 +9,9 @@ class Employee (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    val fname: String,
-    val lname: String
+    @Column(name = "fname")
+    val firstName: String,
+
+    @Column(name = "lname")
+    val lastName: String
 )
