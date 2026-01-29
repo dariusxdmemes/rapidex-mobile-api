@@ -13,9 +13,11 @@ class OrderService(
         /* Returns a list of Order
         * the orders marked as "pending"
         * are orders that:
-        * 1- dont have an employee_id
-        * 2- dont have prep_date
-        * 3- dont have dispatch_date */
+        *  1- dont have an employee_id
+        *  2- dont have prep_date
+        *  3- dont have dispatch_date
+        * -- "dont have" means its null-- */
+        fun getAllOrders(): List<Order> = orderRepository.getAllOrders()
         fun getPendingOrders(): List<Order> = orderRepository.getPendingOrders()
 
 }
