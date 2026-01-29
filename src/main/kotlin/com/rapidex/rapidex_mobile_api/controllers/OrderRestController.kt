@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController
 class OrderRestController(private val service: OrderService) {
 
     @GetMapping
+    fun getAllOrders() = service.getAllOrders()
+
+    @GetMapping("/pending")
     fun getPendingOrders() = service.getPendingOrders()
 
 

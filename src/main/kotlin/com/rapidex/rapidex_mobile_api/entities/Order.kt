@@ -12,6 +12,14 @@ class Order(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    @ManyToMany
+    @JoinTable(
+        name = "products_orders",
+        joinColumns = [JoinColumn(name = "id_order")],
+        inverseJoinColumns = [JoinColumn(name = "id_item")]
+    )
+    val products: MutableList<Product> = mutableListOf(),
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_emp", nullable = true)
     var employee: Employee? = null,
