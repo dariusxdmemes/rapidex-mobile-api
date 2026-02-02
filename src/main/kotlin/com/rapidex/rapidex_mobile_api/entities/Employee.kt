@@ -10,8 +10,8 @@ class Employee (
     val id: Long = 0,
 
     @Column(name = "fname")
-    val firstName: String,
+    val firstName: String = "",
 
     @Column(name = "lname")
-    val lastName: String
+    val lastName: String = ""
 )

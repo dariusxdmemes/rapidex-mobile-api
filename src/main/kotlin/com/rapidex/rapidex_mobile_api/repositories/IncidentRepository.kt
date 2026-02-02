@@ -1,4 +1,10 @@
 package com.rapidex.rapidex_mobile_api.repositories
 
-interface IncidentRepository {
+import com.rapidex.rapidex_mobile_api.entities.Incident
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+
+interface IncidentRepository : JpaRepository<Incident, Long> {
+
+    fun findByEmployeeId(id: Long): List<Incident>
 }
