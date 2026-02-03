@@ -1,6 +1,7 @@
 package com.rapidex.rapidex_mobile_api.service
 
 import com.rapidex.rapidex_mobile_api.entities.Order
+import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
 import com.rapidex.rapidex_mobile_api.repositories.EmployeeRepository
 import com.rapidex.rapidex_mobile_api.repositories.OrderRepository
 import org.springframework.stereotype.Service
@@ -10,13 +11,6 @@ class OrderService(
         private val orderRepository: OrderRepository,
         private val employeeRepository: EmployeeRepository
 ) {
-        /* Returns a list of Order
-        * the orders marked as "pending"
-        * are orders that:
-        *  1- dont have an employee_id
-        *  2- dont have prep_date
-        *  3- dont have dispatch_date
-        * -- "dont have" means its null-- */
 
         fun getAllOrders(): List<Order> {
                 val orders = orderRepository.getAllOrders()
@@ -24,11 +18,17 @@ class OrderService(
                 return orders
         }
 
-
         fun getPendingOrders(): List<Order> {
                 val pendingOrders = orderRepository.getPendingOrders()
 
                 return pendingOrders
+        }
+
+        fun getClaimedOrdersByEmployee(employeeId: Int): List<Order> {
+                employeeRepository.findById(employeeId.toLong())
+                        .orElseThrow { NotFoundException("The specified employee does not exist") }
+
+                return orderRepository.getClaimedOrdersByEmployee(employeeId)
         }
 
 }

@@ -42,7 +42,7 @@ class IncidentService(
     }
 
     fun createIncident(request: CreateIncidentRequestModel): IncidentDTO {
-        val order = orderRepository.findById(request.orderId.toLong())
+        val order = orderRepository.findById(request.orderId)
             .orElseThrow { NotFoundException("Order not found") }
 
         val employee = order.employee

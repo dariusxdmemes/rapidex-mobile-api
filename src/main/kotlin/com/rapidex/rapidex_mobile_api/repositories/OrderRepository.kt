@@ -3,8 +3,9 @@ package com.rapidex.rapidex_mobile_api.repositories
 import com.rapidex.rapidex_mobile_api.entities.Order
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
-interface OrderRepository : JpaRepository<Order, Long> {
+interface OrderRepository : JpaRepository<Order, Int> {
 
     @Query(value = "SELECT * FROM orders", nativeQuery = true)
     fun getAllOrders(): List<Order>
@@ -19,6 +20,16 @@ interface OrderRepository : JpaRepository<Order, Long> {
         nativeQuery = false
     )
     fun getPendingOrders(): List<Order>
+
+    @Query(
+        """
+            SELECT o FROM Order o
+            WHERE o.employee.id = :employeeId
+        """
+    )
+    fun getClaimedOrdersByEmployee(
+        @Param("employeeId") employeeId: Int
+    ): List<Order>
 
 
 }
