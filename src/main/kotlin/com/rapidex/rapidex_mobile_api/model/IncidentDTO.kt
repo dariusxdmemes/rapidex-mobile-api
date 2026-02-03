@@ -1,10 +1,10 @@
 package com.rapidex.rapidex_mobile_api.model
 
 data class IncidentDTO(
-    val id: Long,
+    val id: Int,
     val type: String,
     val description: String?,
-    val orderId: Long,
-    val employeeId: Long,
+    val orderId: Int,
+    val employeeId: Int,
     val employeeName: String
 )
