@@ -54,6 +54,38 @@ http://localhost:8080/api
   }
 ]
 ```
+
+#### `GET /orders/pending`
+
+**Description**: Retrieves a comprehensive list of all the *pending* orders within the system. A pending order consists on a order with products linked to it but not claimed by any employee and not having preparation date nor dispatch date.
+
+**Response** — `200 OK`
+
+```json
+[
+  {
+    "id": 1,
+    "products": [
+      {
+        "id": 1,
+        "productName": "Laptop",
+        "productCategory": "Electronics",
+        "productDescription": "15-inch business laptop"
+      },
+      {
+        "id": 2,
+        "productName": "Office Chair",
+        "productCategory": "Furniture",
+        "productDescription": "Ergonomic adjustable chair"
+      }
+    ],
+    "employee": null,
+    "prepDate": null,
+    "dispatchDate": null
+  }
+]
+```
+
 ### Incidents Management
 
 #### `GET /incidents`
@@ -96,7 +128,7 @@ http://localhost:8080/api
 **Description**: Retrieves all incidents associated with a specific employee by their ID.
 
 **Path Parameters**:
-- `id` (integer): The unique identifier of the employee.
+- `id` (Long): The unique identifier of the employee.
 
 **Response** — `200 OK`
 
@@ -151,11 +183,9 @@ All errors follow a consistent JSON structure:
 
 ```json
 {
-  "timestamp": "2026-02-02T10:30:45.123+00:00",
   "status": 404,
   "error": "Not Found",
-  "message": "Order not found",
-  "path": "/api/incidents"
+  "message": "Order not found"
 }
 ```
 
@@ -174,11 +204,9 @@ Returned when the request is malformed or contains invalid data.
 
 ```json
 {
-  "timestamp": "2026-02-02T10:30:45.123+00:00",
   "status": 400,
   "error": "Bad Request",
-  "message": "Order not assigned to any employee",
-  "path": "/api/incidents"
+  "message": "Order not assigned to any employee"
 }
 ```
 
@@ -195,11 +223,9 @@ Returned when a requested resource does not exist in the system.
 
 ```json
 {
-  "timestamp": "2026-02-02T10:30:45.123+00:00",
   "status": 404,
   "error": "Not Found",
-  "message": "Order not found",
-  "path": "/api/incidents"
+  "message": "Order not found"
 }
 ```
 
@@ -214,13 +240,11 @@ Returned when an unexpected error occurs on the server side.
 
 **Example**:
 
-```
+```json
 {
-  "timestamp": "2026-02-02T10:30:45.123+00:00",
   "status": 500,
   "error": "Internal Server Error",
-  "message": "An unexpected error occurred",
-  "path": "/api/incidents"
+  "message": "An unexpected error occurred"
 }
 ```
 
