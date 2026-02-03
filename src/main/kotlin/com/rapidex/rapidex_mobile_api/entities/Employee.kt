@@ -7,7 +7,7 @@ import jakarta.persistence.*
 class Employee (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: Int = 0,
 
     @Column(name = "fname")
     val firstName: String = "",
