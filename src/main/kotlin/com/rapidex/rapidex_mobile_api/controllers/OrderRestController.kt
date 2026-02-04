@@ -1,10 +1,11 @@
 package com.rapidex.rapidex_mobile_api.controllers
 
-import com.rapidex.rapidex_mobile_api.entities.Employee
+import com.rapidex.rapidex_mobile_api.dto.OrderDTO
 import com.rapidex.rapidex_mobile_api.entities.Order
 import com.rapidex.rapidex_mobile_api.service.OrderService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -22,4 +23,10 @@ class OrderRestController(private val service: OrderService) {
     fun getClaimedOrdersByEmployee(
         @PathVariable employeeId: Int
     ): List<Order> = service.getClaimedOrdersByEmployee(employeeId)
+
+    @PostMapping("/claim/{orderId}/{employeeId}")
+    fun claimOrder(
+        @PathVariable orderId: Int,
+        @PathVariable employeeId: Int
+    ): OrderDTO = service.claimOrder(orderId, employeeId)
 }

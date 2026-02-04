@@ -5,7 +5,7 @@ import com.rapidex.rapidex_mobile_api.entities.Incident
 import com.rapidex.rapidex_mobile_api.exceptions.BadRequestException
 import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
 import com.rapidex.rapidex_mobile_api.model.CreateIncidentRequestModel
-import com.rapidex.rapidex_mobile_api.model.IncidentDTO
+import com.rapidex.rapidex_mobile_api.dto.IncidentDTO
 import com.rapidex.rapidex_mobile_api.repositories.IncidentRepository
 import com.rapidex.rapidex_mobile_api.repositories.OrderRepository
 import org.springframework.stereotype.Service

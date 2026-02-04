@@ -1,7 +1,7 @@
 package com.rapidex.rapidex_mobile_api.controllers
 
 import com.rapidex.rapidex_mobile_api.model.CreateIncidentRequestModel
-import com.rapidex.rapidex_mobile_api.model.IncidentDTO
+import com.rapidex.rapidex_mobile_api.dto.IncidentDTO
 import com.rapidex.rapidex_mobile_api.service.IncidentService
 import org.apache.coyote.Request
 import org.springframework.web.bind.annotation.GetMapping

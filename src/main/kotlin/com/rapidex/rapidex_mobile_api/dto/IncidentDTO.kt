@@ -1,4 +1,4 @@
-package com.rapidex.rapidex_mobile_api.model
+package com.rapidex.rapidex_mobile_api.dto
 
 data class IncidentDTO(
     val id: Int,
