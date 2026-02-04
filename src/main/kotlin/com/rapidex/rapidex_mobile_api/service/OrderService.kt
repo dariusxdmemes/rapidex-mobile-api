@@ -77,4 +77,19 @@ class OrderService(
                         prepDate = order.prepDate?.toString(),
                         dispatchDate = order.dispatchDate?.toString()
                 )
+
+        fun deleteOrder(orderId: Int) {
+                val order = orderRepository.findById(orderId)
+                        .orElseThrow { NotFoundException("This order does not exist!") }
+
+                if (order.employee == null) {
+                        throw BadRequestException("This order is not assigned to any employee")
+                }
+
+                if (order.prepDate == null) {
+                        throw BadRequestException("This order has no preparation date")
+                }
+
+                orderRepository.delete(order)
+        }
 }
