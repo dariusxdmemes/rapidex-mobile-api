@@ -70,7 +70,8 @@ class OrderService(
                                 EmployeeDTO(
                                         id = employee.id,
                                         firstName = employee.firstName,
-                                        lastName = employee.lastName
+                                        lastName = employee.lastName,
+                                        username = employee.username
                                 )
                         },
                         prepDate = order.prepDate?.toString(),
