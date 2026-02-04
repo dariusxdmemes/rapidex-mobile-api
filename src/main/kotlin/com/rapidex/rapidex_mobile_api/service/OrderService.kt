@@ -90,10 +90,6 @@ class OrderService(
                         throw BadRequestException("This order has no preparation date")
                 }
 
-                if (order.dispatchDate == null) {
-                        throw BadRequestException("This order has no dispatch date")
-                }
-
                 orderRepository.delete(order)
         }
 }
