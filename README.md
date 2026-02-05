@@ -12,9 +12,6 @@ All API requests should be made to:
 http://localhost:8080/api
 ```
 
-### Authentication
-
-> Authentication is currently not implemented.
 ## Technical Specifications
 
 - **Data Format**: All requests and responses utilize JSON.
@@ -23,6 +20,41 @@ http://localhost:8080/api
 - **Empty States**: Empty lists (`[]`) are returned as valid responses when no data is found.
 
 ## API Endpoints
+
+### Employee Authentication
+
+#### `POST employees/login`
+**Description**: Authenticates an employee using username and password.
+If the credentials are valid returns basic employee information, if not,
+returns and error with basic information.
+
+**Request** — `Body (JSON)`
+```json
+{
+  "username": "jdoe",
+  "password": "1234"
+}
+```
+
+**Success Response** — `200 OK`
+```json
+{
+  "id": 3,
+  "firstName": "John",
+  "lastName": "Doe",
+  "username": "jdoe"
+}
+```
+
+**Error Response** — `400 Bad Request`
+```json
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Invalid username or password"
+}
+
+```
 
 ### Orders Management
 
@@ -57,7 +89,7 @@ http://localhost:8080/api
 
 #### `GET /orders/pending`
 
-**Description**: Retrieves a comprehensive list of all the *pending* orders within the system. A pending order consists on a order with products linked to it but not claimed by any employee and not having preparation date nor dispatch date.
+**Description**: Retrieves a comprehensive list of all the *pending* orders within the system. A pending order consists on an order with products linked to it but not claimed by any employee and not having preparation date nor dispatch date.
 
 **Response** — `200 OK`
 
