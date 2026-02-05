@@ -12,17 +12,49 @@ All API requests should be made to:
 http://localhost:8080/api
 ```
 
-### Authentication
-
-> Authentication is currently not implemented.
 ## Technical Specifications
 
 - **Data Format**: All requests and responses utilize JSON.
-- **Date Handling**: Dates are returned as ***dd-MM-yyyy/HH-mm-ss*** formatted Strings.
+- **Date Handling**: Dates are returned as formatted Strings.
 - **Nullability**: `null` values are explicitly allowed where specified in the schema.
 - **Empty States**: Empty lists (`[]`) are returned as valid responses when no data is found.
 
 ## API Endpoints
+
+### Employee Authentication
+
+#### `POST employees/login`
+**Description**: Authenticates an employee using username and password.
+If the credentials are valid returns basic employee information, if not,
+returns and error with basic information.
+
+**Request** — `Body (JSON)`
+```json
+{
+  "username": "jdoe",
+  "password": "1234"
+}
+```
+
+**Success Response** — `200 OK`
+```json
+{
+  "id": 3,
+  "firstName": "John",
+  "lastName": "Doe",
+  "username": "jdoe"
+}
+```
+
+**Error Response** — `400 Bad Request`
+```json
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Invalid username or password"
+}
+
+```
 
 ### Orders Management
 
@@ -57,7 +89,7 @@ http://localhost:8080/api
 
 #### `GET /orders/pending`
 
-**Description**: Retrieves a comprehensive list of all the *pending* orders within the system. A pending order consists on a order with products linked to it but not claimed by any employee and not having preparation date nor dispatch date.
+**Description**: Retrieves a comprehensive list of all the *pending* orders within the system. A pending order consists on an order with products linked to it but not claimed by any employee and not having preparation date nor dispatch date.
 
 **Response** — `200 OK`
 
@@ -85,6 +117,21 @@ http://localhost:8080/api
   }
 ]
 ```
+
+#### `DELETE /orders/{orderId}`
+
+**Description**: Deletes an order only if is marked as **_finished_**.
+An order is considered **_finalized_** / **_finished_** when:
+* Is assigned to an employee
+* It has a preparation date
+* It has a dispatch date
+
+If none of these conditions are met, the order **will not be deleted**.
+
+**Response** — `204 No Content`
+>_No response body._
+
+The order is completely removed from the database.
 
 ### Incidents Management
 
@@ -128,7 +175,7 @@ http://localhost:8080/api
 **Description**: Retrieves all incidents associated with a specific employee by their ID.
 
 **Path Parameters**:
-- `id` (Long): The unique identifier of the employee.
+- `id` (Int): The unique identifier of the employee.
 
 **Response** — `200 OK`
 
