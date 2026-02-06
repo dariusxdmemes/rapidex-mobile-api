@@ -1,5 +1,6 @@
 package com.rapidex.rapidex_mobile_api.controllers
 
+import com.rapidex.rapidex_mobile_api.model.CreateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.service.EmployeeService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -21,7 +22,7 @@ class EmployeeWebController(private val employeeService: EmployeeService) {
 
     @GetMapping("/new")
     fun newEmployeeForm(model: Model): String {
-        model.addAttribute("employee", createEmployeeRequest())
+        model.addAttribute("employee", CreateEmployeeRequest())
 
         return "employees/new"
     }
