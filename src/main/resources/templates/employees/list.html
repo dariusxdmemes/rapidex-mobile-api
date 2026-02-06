@@ -15,11 +15,10 @@
     <img
             th:src="@{/images/logo_rapidex_trinidad.png}"
             alt="Rapidex Logo"
-            style="max-height: 80px;"
+            style="max-height: 300px;"
     >
 </div>
 
-<!-- Employees Table -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-10">
@@ -61,7 +60,6 @@
                         </tbody>
                     </table>
 
-                    <!-- Empty state -->
                     <div
                             th:if="${#lists.isEmpty(employees)}"
                             class="text-center text-muted mt-4"
