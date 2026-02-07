@@ -6,6 +6,7 @@ import com.rapidex.rapidex_mobile_api.exceptions.BadRequestException
 import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
 import com.rapidex.rapidex_mobile_api.model.CreateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.model.LoginRequestModel
+import com.rapidex.rapidex_mobile_api.model.UpdateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.repositories.EmployeeRepository
 import org.springframework.stereotype.Service
 
@@ -81,6 +82,18 @@ class EmployeeService(private val employeeRepository: EmployeeRepository) {
         }
 
         employeeRepository.deleteById(employeeId)
+    }
+
+    fun updateEmployee(employeeId: Int, request: UpdateEmployeeRequest) {
+        val employee = employeeRepository.findById(employeeId)
+            .orElseThrow { NotFoundException("Employee not found") }
+
+        employee.firstName = request.firstName
+        employee.lastName = request.lastName
+        employee.password = request.password
+
+        employeeRepository.save(employee)
+
     }
 
 }

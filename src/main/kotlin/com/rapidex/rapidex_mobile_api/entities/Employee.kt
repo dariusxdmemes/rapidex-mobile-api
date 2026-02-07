@@ -10,14 +10,14 @@ class Employee (
     val id: Int = 0,
 
     @Column(name = "fname", nullable = false)
-    val firstName: String = "",
+    var firstName: String = "",
 
     @Column(name = "lname", nullable = false)
-    val lastName: String = "",
+    var lastName: String = "",
 
     @Column(name = "username", nullable = false)
     val username: String = "",
 
     @Column(name = "password", nullable = false)
-    val password: String = ""
+    var password: String = ""
 )

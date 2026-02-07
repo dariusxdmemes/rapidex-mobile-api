@@ -61,6 +61,13 @@
                                 Delete Employee
                             </button>
                         </form>
+
+                        <a th:href="@{/rapidex/employees/{id}/edit(id=${employee.id})}"
+                           class="btn btn-outline-primary">
+                            Edit
+                        </a>
+
+
                     </div>
 
                 </div>

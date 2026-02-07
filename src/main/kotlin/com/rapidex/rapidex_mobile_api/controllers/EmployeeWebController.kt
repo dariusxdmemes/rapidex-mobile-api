@@ -1,6 +1,7 @@
 package com.rapidex.rapidex_mobile_api.controllers
 
 import com.rapidex.rapidex_mobile_api.model.CreateEmployeeRequest
+import com.rapidex.rapidex_mobile_api.model.UpdateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.service.EmployeeService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -47,5 +48,29 @@ class EmployeeWebController(private val employeeService: EmployeeService) {
         employeeService.deleteEmployee(id)
 
         return "redirect:/rapidex/employees"
+    }
+
+    @GetMapping("/{id}/edit")
+    fun editEmployeeForm(@PathVariable id: Int, model: Model): String {
+        val employee = employeeService.getEmployeeById(id)
+
+        model.addAttribute("employee", employee)
+        model.addAttribute(
+            "updateRequest",
+            UpdateEmployeeRequest(
+                firstName = employee.firstName,
+                lastName = employee.lastName,
+                password = employee.password
+            )
+        )
+
+        return "employees/edit"
+    }
+
+    @PostMapping("/{id}/edit")
+    fun updateEmployee(@PathVariable id: Int, request: UpdateEmployeeRequest): String {
+        employeeService.updateEmployee(id, request)
+
+        return "redirect:/rapidex/employees/$id"
     }
 }
