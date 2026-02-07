@@ -20,6 +20,14 @@ class EmployeeWebController(private val employeeService: EmployeeService) {
         return "employees/list"
     }
 
+    @GetMapping("/{id}")
+    fun employeeDetail(@PathVariable id: Int, model: Model): String {
+        val employee = employeeService.getEmployeeById(id)
+        model.addAttribute("employee", employee)
+
+        return "employees/detail"
+    }
+
     @GetMapping("/new")
     fun newEmployeeForm(model: Model): String {
         model.addAttribute("employee", CreateEmployeeRequest())

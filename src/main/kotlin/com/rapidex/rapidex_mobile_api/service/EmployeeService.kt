@@ -3,6 +3,7 @@ package com.rapidex.rapidex_mobile_api.service
 import com.rapidex.rapidex_mobile_api.dto.EmployeeDTO
 import com.rapidex.rapidex_mobile_api.entities.Employee
 import com.rapidex.rapidex_mobile_api.exceptions.BadRequestException
+import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
 import com.rapidex.rapidex_mobile_api.model.CreateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.model.LoginRequestModel
 import com.rapidex.rapidex_mobile_api.repositories.EmployeeRepository
@@ -24,6 +25,12 @@ class EmployeeService(private val employeeRepository: EmployeeRepository) {
             lastName = employee.lastName,
             username = employee.username
         )
+    }
+
+    fun getEmployeeById(id: Int): Employee {
+        return employeeRepository.findById(id)
+            .orElseThrow { NotFoundException("This employee does not exist!") }
+
     }
 
     fun createEmployee(request: CreateEmployeeRequest) {
