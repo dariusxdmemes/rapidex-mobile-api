@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface EmployeeRepository : JpaRepository<Employee, Int> {
     fun findByUsername(username: String): Employee?
+
+    fun findAllByUsernameStartingWith(username: String): List<Employee>
 }

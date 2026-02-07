@@ -22,10 +22,12 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-webmvc")
+	//implementation("org.springframework.boot:spring-boot-starter-webmvc") ESTA DEPENDENCIA PARA MVC NO FUNCIONA!!!! LO DEJO AQUI PARA APRENDER DE MIS ERRORES. !!!!!
+	implementation("org.springframework.boot:spring-boot-starter-web") // MVC CORRECTO, USAR ESTE, ESTE VA, ES EL MEJOR, EL UNICO Y NECESARIO!!!!!!
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf") // Thymeleaf importante
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("tools.jackson.module:jackson-module-kotlin")
-	testImplementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.boot:spring-boot-starter-security") // Cambiar a RuntimeImplementation para testing
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test-classic")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
