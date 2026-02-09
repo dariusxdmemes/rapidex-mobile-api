@@ -42,4 +42,18 @@ class OrderWebController(private val orderService: OrderService, private val pro
 
         return "redirect:/rapidex/orders"
     }
+
+    @PostMapping("/{id}/delete")
+    fun deleteOrder(@PathVariable id: Int): String {
+        orderService.deleteOrder(id)
+
+        return "redirect:/rapidex/orders"
+    }
+
+    @PostMapping("/{id}/admin-delete")
+    fun adminDeleteOrder(@PathVariable id: Int): String {
+        orderService.adminDeleteOrder(id)
+
+        return "redirect:/rapidex/orders"
+    }
 }

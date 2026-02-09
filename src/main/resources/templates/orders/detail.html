@@ -85,13 +85,13 @@
                             Back to orders
                         </a>
 
-                        <form th:action="@{/rapidex/orders/{id}/delete(id=${order.id})}"
+                        <form th:action="@{/rapidex/orders/{id}/admin-delete(id=${order.id})}"
                               method="post"
-                              onsubmit="return confirmDelete();">
+                              onsubmit="return confirmAdminDelete();">
 
                             <button type="submit"
                                     class="btn btn-outline-danger">
-                                Delete order
+                                Force delete order
                             </button>
                         </form>
 
@@ -108,11 +108,11 @@
 </body>
 </html>
 <script>
-    function confirmDelete() {
+    function confirmAdminDelete() {
         return confirm(
             "Delete an order ONLY if the order is faulty or created for testing purposes.\n\n" +
-            "Orders are automatically removed once they have a dispatch date.\n\n" +
-            "Do you want to continue?"
+            "Orders are automatically removed once they have a dispatch date and this action BYPASSES ALL BUSSINESS RULES.\n\n" +
+            "proceed with EXTREME CAUTION."
         );
     }
 </script>

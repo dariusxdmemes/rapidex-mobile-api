@@ -125,6 +125,17 @@ class OrderService(
                         throw BadRequestException("This order has no preparation date")
                 }
 
+                if (order.dispatchDate == null) {
+                        throw BadRequestException("This order has no dispatch date")
+                }
+
+                orderRepository.delete(order)
+        }
+
+        fun adminDeleteOrder(orderId: Int) {
+                val order = orderRepository.findById(orderId)
+                        .orElseThrow { NotFoundException("This order does not exist") }
+
                 orderRepository.delete(order)
         }
 
