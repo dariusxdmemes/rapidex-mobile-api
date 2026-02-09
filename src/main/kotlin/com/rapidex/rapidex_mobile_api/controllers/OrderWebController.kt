@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("admin/orders")
+@RequestMapping("rapidex/orders")
 class OrderWebController(private val service: OrderService) {
     @GetMapping
     fun showPendingOrders(model: Model): String {
-        model.addAttribute("list", service.getPendingOrders())
+        model.addAttribute("orders", service.getAllOrders())
 
-        return "pendingOrders"
+        return "orders/list"
     }
 }
