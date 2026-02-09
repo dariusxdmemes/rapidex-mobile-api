@@ -6,21 +6,56 @@ import com.rapidex.rapidex_mobile_api.dto.ProductDTO
 import com.rapidex.rapidex_mobile_api.entities.Order
 import com.rapidex.rapidex_mobile_api.exceptions.BadRequestException
 import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
+import com.rapidex.rapidex_mobile_api.model.CreateOrderRequestModel
 import com.rapidex.rapidex_mobile_api.repositories.EmployeeRepository
 import com.rapidex.rapidex_mobile_api.repositories.OrderRepository
+import com.rapidex.rapidex_mobile_api.repositories.ProductRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class OrderService(
         private val orderRepository: OrderRepository,
-        private val employeeRepository: EmployeeRepository
+        private val employeeRepository: EmployeeRepository,
+        private val productRepository: ProductRepository
 ) {
 
         fun getAllOrders(): List<Order> {
                 val orders = orderRepository.getAllOrders()
 
                 return orders
+        }
+
+        fun getOrderById(orderId: Int): OrderDTO {
+                val order = orderRepository.findById(orderId)
+                        .orElseThrow { NotFoundException("Order not found") }
+
+               val productDTOs = order.products.map { product ->
+                       ProductDTO(
+                               id = product.id,
+                               name = product.productName,
+                               category = product.productCategory,
+                               description = product.productDescription
+
+                       )
+               }
+
+                val employeeDTO = order.employee?.let { employee ->
+                        EmployeeDTO(
+                                id = employee.id,
+                                firstName = employee.firstName,
+                                lastName = employee.lastName,
+                                username = employee.username,
+                        )
+                }
+
+                return OrderDTO(
+                        id = order.id,
+                        products = productDTOs,
+                        employee = employeeDTO,
+                        prepDate = order.prepDate.toString(),
+                        dispatchDate = order.dispatchDate.toString()
+                )
         }
 
         fun getPendingOrders(): List<Order> {
@@ -90,6 +125,38 @@ class OrderService(
                         throw BadRequestException("This order has no preparation date")
                 }
 
+                if (order.dispatchDate == null) {
+                        throw BadRequestException("This order has no dispatch date")
+                }
+
                 orderRepository.delete(order)
+        }
+
+        fun adminDeleteOrder(orderId: Int) {
+                val order = orderRepository.findById(orderId)
+                        .orElseThrow { NotFoundException("This order does not exist") }
+
+                orderRepository.delete(order)
+        }
+
+        fun createOrder(request: CreateOrderRequestModel) {
+                if (request.productIds.isEmpty()) {
+                        throw BadRequestException("An order must contain at least one product!")
+                }
+
+                val products = productRepository.findAllById(request.productIds)
+
+                if (products.size != request.productIds.size) {
+                        throw BadRequestException("One or more products do not exist!")
+                }
+
+                val order = Order(
+                        products = products,
+                        employee = null,
+                        prepDate = null,
+                        dispatchDate = null
+                )
+
+                orderRepository.save(order)
         }
 }
