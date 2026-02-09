@@ -21,7 +21,7 @@ class OrderWebController(private val orderService: OrderService, private val pro
     @GetMapping("/{id}")
     fun orderDetail(@PathVariable id: Int, model: Model): String {
         val order = orderService.getOrderById(id)
-        model.addAttribute("orders", order)
+        model.addAttribute("order", order)
 
         return "orders/detail"
     }
