@@ -84,6 +84,18 @@
                            class="btn btn-outline-secondary">
                             Back to orders
                         </a>
+
+                        <form th:action="@{/rapidex/orders/{id}/delete(id=${order.id})}"
+                              method="post"
+                              onsubmit="return confirmDelete();">
+
+                            <button type="submit"
+                                    class="btn btn-outline-danger">
+                                Delete order
+                            </button>
+                        </form>
+
+
                     </div>
 
                 </div>
@@ -95,3 +107,12 @@
 
 </body>
 </html>
+<script>
+    function confirmDelete() {
+        return confirm(
+            "Delete an order ONLY if the order is faulty or created for testing purposes.\n\n" +
+            "Orders are automatically removed once they have a dispatch date.\n\n" +
+            "Do you want to continue?"
+        );
+    }
+</script>
