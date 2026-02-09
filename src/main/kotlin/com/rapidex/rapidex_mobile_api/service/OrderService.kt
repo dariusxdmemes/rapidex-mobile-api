@@ -23,6 +23,38 @@ class OrderService(
                 return orders
         }
 
+        fun getOrderById(orderId: Int): OrderDTO {
+                val order = orderRepository.findById(orderId)
+                        .orElseThrow { NotFoundException("Order not found") }
+
+               val productDTOs = order.products.map { product ->
+                       ProductDTO(
+                               id = product.id,
+                               name = product.productName,
+                               category = product.productCategory,
+                               description = product.productDescription
+
+                       )
+               }
+
+                val employeeDTO = order.employee?.let { employee ->
+                        EmployeeDTO(
+                                id = employee.id,
+                                firstName = employee.firstName,
+                                lastName = employee.lastName,
+                                username = employee.username,
+                        )
+                }
+
+                return OrderDTO(
+                        id = order.id,
+                        products = productDTOs,
+                        employee = employeeDTO,
+                        prepDate = order.prepDate.toString(),
+                        dispatchDate = order.dispatchDate.toString()
+                )
+        }
+
         fun getPendingOrders(): List<Order> {
                 val pendingOrders = orderRepository.getPendingOrders()
 

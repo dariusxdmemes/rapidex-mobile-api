@@ -1,4 +1,24 @@
 package com.rapidex.rapidex_mobile_api.service
 
-class ProductService {
+import com.rapidex.rapidex_mobile_api.entities.Product
+import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
+import com.rapidex.rapidex_mobile_api.repositories.OrderRepository
+import com.rapidex.rapidex_mobile_api.repositories.ProductRepository
+import org.springframework.stereotype.Service
+
+@Service
+class ProductService(private val productRepository: ProductRepository, private val orderRepository: OrderRepository) {
+    fun getAllProducts(): List<Product> = productRepository.findAll()
+
+    fun getProductById(productId: Int): Product = productRepository.findById(productId)
+        .orElseThrow { NotFoundException("Product not found") }
+
+    fun getProductsByOrderId(orderId: Int): List<Product> {
+        val order = orderRepository.findById(orderId)
+            .orElseThrow { NotFoundException("Order not found") }
+
+        val products = order.products.toList()
+
+        return products
+    }
 }

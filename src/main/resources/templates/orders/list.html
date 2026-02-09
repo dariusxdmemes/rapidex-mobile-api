@@ -64,11 +64,7 @@
         <span th:if="${order.employee != null}"
               th:text="${order.employee.firstName + ' ' + order.employee.lastName}">
         </span>
-
-                                <span th:if="${order.employee == null}"
-                                      class="text-muted">
-            Unassigned
-        </span>
+                                <span th:if="${order.employee == null}" class="text-muted">Unassigned</span>
                             </td>
 
                             <td th:text="${order.prepDate}"></td>

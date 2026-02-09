@@ -19,6 +19,9 @@ class OrderRestController(private val service: OrderService) {
     @GetMapping
     fun getAllOrders() = service.getAllOrders()
 
+    @GetMapping("/{id}")
+    fun getOrderById(@PathVariable id: Int): OrderDTO = service.getOrderById(id)
+
     @GetMapping("/pending")
     fun getPendingOrders() = service.getPendingOrders()
 
