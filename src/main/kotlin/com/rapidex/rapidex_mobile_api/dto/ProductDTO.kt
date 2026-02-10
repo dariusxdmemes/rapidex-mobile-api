@@ -4,5 +4,6 @@ data class ProductDTO(
     val id: Int,
     val name: String,
     val category: String,
-    val description: String?
+    val description: String?,
+    val imageUrl: String?
 )
