@@ -35,7 +35,8 @@ class OrderService(
                                id = product.id,
                                name = product.productName,
                                category = product.productCategory,
-                               description = product.productDescription
+                               description = product.productDescription,
+                               imageUrl = product.imageUrl
 
                        )
                }
@@ -98,7 +99,8 @@ class OrderService(
                                         id = product.id,
                                         name = product.productName,
                                         category = product.productCategory,
-                                        description = product.productDescription
+                                        description = product.productDescription,
+                                        imageUrl = product.imageUrl
                                 )
                         },
                         employee = order.employee?.let { employee ->

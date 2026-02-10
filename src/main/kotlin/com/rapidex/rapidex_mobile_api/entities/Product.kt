@@ -16,5 +16,8 @@ data class Product(
     var productCategory: String,
 
     @Column(name = "descrip", nullable = true)
-    var productDescription: String? = null
+    var productDescription: String? = null,
+
+    @Column(name = "prod_img_url")
+    var imageUrl: String? = null
 )
