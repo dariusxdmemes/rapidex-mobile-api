@@ -51,7 +51,7 @@
                         <tr th:each="product : ${products}">
 
                             <td>
-                                <img th:src="${product.imageUrl}" alt="placeholder.png" style="max-height: 100px">
+                                <img th:src="${product.imageUrl}" alt="no_img_avalible" style="max-height: 100px">
                             </td>
                             <td th:text="${product.id}"></td>
                             <td th:text="${product.productName}"></td>
