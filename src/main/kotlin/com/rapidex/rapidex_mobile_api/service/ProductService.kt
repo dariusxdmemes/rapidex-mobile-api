@@ -1,6 +1,7 @@
 package com.rapidex.rapidex_mobile_api.service
 
 import com.rapidex.rapidex_mobile_api.entities.Product
+import com.rapidex.rapidex_mobile_api.exceptions.BadRequestException
 import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
 import com.rapidex.rapidex_mobile_api.model.CreateProductRequestModel
 import com.rapidex.rapidex_mobile_api.model.UpdateProductRequestModel
@@ -47,5 +48,13 @@ class ProductService(private val productRepository: ProductRepository, private v
         product.imageUrl = request.productImageUrl
 
         productRepository.save(product)
+    }
+
+    fun deleteProduct(productId: Int) {
+        if (!productRepository.existsById(productId)) {
+            throw BadRequestException("Product not found")
+        }
+
+        productRepository.deleteById(productId)
     }
 }

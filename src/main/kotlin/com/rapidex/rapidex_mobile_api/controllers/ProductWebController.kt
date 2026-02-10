@@ -70,4 +70,11 @@ class ProductWebController(private val productService: ProductService) {
 
         return "redirect:/rapidex/products/$id"
     }
+
+    @PostMapping("/{id}/delete")
+    fun deleteProduct(@PathVariable id: Int): String {
+        productService.deleteProduct(id)
+
+        return "redirect:/rapidex/products"
+    }
 }
