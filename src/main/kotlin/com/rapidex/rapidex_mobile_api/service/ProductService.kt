@@ -2,6 +2,7 @@ package com.rapidex.rapidex_mobile_api.service
 
 import com.rapidex.rapidex_mobile_api.entities.Product
 import com.rapidex.rapidex_mobile_api.exceptions.NotFoundException
+import com.rapidex.rapidex_mobile_api.model.CreateProductRequestModel
 import com.rapidex.rapidex_mobile_api.repositories.OrderRepository
 import com.rapidex.rapidex_mobile_api.repositories.ProductRepository
 import org.springframework.stereotype.Service
@@ -20,5 +21,18 @@ class ProductService(private val productRepository: ProductRepository, private v
         val products = order.products.toList()
 
         return products
+    }
+
+    fun getAllProductsCategories(): List<String> = productRepository.findAllCategories()
+
+    fun createProduct(request: CreateProductRequestModel) {
+        val product = Product(
+            productName = request.productName,
+            productCategory = request.productCategory,
+            productDescription = request.productCategory,
+            imageUrl = request.productImageUrl
+        )
+
+        productRepository.save(product)
     }
 }
