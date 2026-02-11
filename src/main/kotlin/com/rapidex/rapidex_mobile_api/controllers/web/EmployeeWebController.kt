@@ -1,4 +1,4 @@
-package com.rapidex.rapidex_mobile_api.controllers
+package com.rapidex.rapidex_mobile_api.controllers.web
 
 import com.rapidex.rapidex_mobile_api.model.CreateEmployeeRequest
 import com.rapidex.rapidex_mobile_api.model.UpdateEmployeeRequest
