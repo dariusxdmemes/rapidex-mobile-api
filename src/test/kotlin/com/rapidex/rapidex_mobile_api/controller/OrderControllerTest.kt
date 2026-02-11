@@ -1,6 +1,6 @@
 package com.rapidex.rapidex_mobile_api.controller
 
-import com.rapidex.rapidex_mobile_api.controllers.OrderRestController
+import com.rapidex.rapidex_mobile_api.controllers.rest.OrderRestController
 import com.rapidex.rapidex_mobile_api.exceptions.InternalServerErrorException
 import com.rapidex.rapidex_mobile_api.handler.GlobalExceptionHandler
 import com.rapidex.rapidex_mobile_api.service.OrderService

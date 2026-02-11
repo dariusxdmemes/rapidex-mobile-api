@@ -1,4 +1,4 @@
-package com.rapidex.rapidex_mobile_api.controllers
+package com.rapidex.rapidex_mobile_api.controllers.rest
 
 import com.rapidex.rapidex_mobile_api.dto.OrderDTO
 import com.rapidex.rapidex_mobile_api.entities.Order
