@@ -297,9 +297,250 @@ Returned when an unexpected error occurs on the server side.
 
 ## Web Interface (MVC)
 
-The project is currently expanding to include a web-based administration dashboard.
+### Getting Started (Admin Panel Setup)
 
-- **Status**: In Progress / Not yet implemented.
-- **Planned Features**:
-    - Visual order managing.
-    - Employee management dashboard.
+This section explains how to clone, configure, and run the Rapidex project in order to access
+the Web Administration Panel.  
+These steps are written so that **developers with little or no Spring experience** can follow them
+without issues.
+
+---
+
+#### Cloning the Repository (IntelliJ IDEA)
+
+``git clone https://github.com/dariusxdmemes/rapidex-mobile-api``
+
+1. Open **IntelliJ IDEA**
+2. On the welcome screen, select **“Get from VCS”**
+3. Choose **Git** as the version control system
+4. Paste the repository URL into the **URL** field
+5. Select a local destination folder
+6. Click **Clone**
+
+Once the project is cloned, IntelliJ will automatically open it and start indexing the files.
+
+>  If IntelliJ asks to trust the project, select **Trust Project**.
+
+---
+
+#### Project Configuration
+
+Before running the application, make sure the following configuration files are present and correctly set.
+
+---
+
+##### `application.properties`
+
+This file configures the database connection and JPA behavior.
+
+```properties
+spring.application.name=rapidex-mobile-api
+
+# DATA SOURCE (CHANGE localhost TO VPS DOMAIN IF DEPLOYED)
+spring.datasource.url=jdbc:mysql://localhost:3306/rapidex_db?serverTimezone=UTC
+spring.datasource.username=rapidex
+spring.datasource.password=R@pidex_123
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / HIBERNATE
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+```
+
+# Important
+
+Ensure MySQL is running
+
+The database `rapidex_db` must exist
+
+Update credentials if necessary
+
+## build.gradle.kts – Dependencies
+
+The project relies on the following dependencies.
+```kotlin
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // THIS DEPENDENCY DOES NOT WORK FOR MVC
+    // implementation("org.springframework.boot:spring-boot-starter-webmvc")
+
+    // CORRECT DEPENDENCY FOR MVC (USE THIS)
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf") // Thymeleaf templates
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("tools.jackson.module:jackson-module-kotlin")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-security")
+    runtimeOnly("com.mysql:mysql-connector-j")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test-classic")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+```
+
+### Critical Note
+
+`spring-boot-starter-webmvc` DOES NOT WORK for this project
+
+Always use:
+```kotlin
+implementation("org.springframework.boot:spring-boot-starter-web")
+```
+
+This dependency includes:
+
+- Spring MVC
+- Embedded Tomcat
+- Request mapping
+- View resolution (Thymeleaf support)
+
+## Running the Application
+
+1. Locate the main Spring Boot class (annotated with `@SpringBootApplication`)
+2. Right-click the file
+3. Select Run
+
+Once the application starts successfully, open a browser and navigate to:
+```
+http://localhost:8080/rapidex
+```
+
+## Web Interface (Administration Panel)
+
+Rapidex includes a web-based administration panel designed for warehouse supervisors and managers.
+This interface allows full control and monitoring of employees, orders, and products through a simple
+and intuitive UI built with Spring MVC, Thymeleaf, and Bootstrap.
+
+The web interface is completely independent from the REST API consumed by the Android application.
+
+### Accessing the Admin Panel
+
+Once the application is running, access the administration panel at:
+```
+http://localhost:8080/rapidex
+```
+
+You will be greeted with the main dashboard, which serves as the entry point to all administrative features.
+
+### Dashboard Overview
+
+The dashboard provides quick access to the main management areas:
+
+- Employees
+- Orders
+- Products
+
+Each section is accessible through clearly labeled cards.
+
+## Employee Management
+
+### Viewing Employees
+
+Navigate to:
+```
+/rapidex/employees
+```
+
+This screen displays all registered employees in a table format.
+
+Each employee row includes:
+
+- Employee ID
+- First name
+- Last name
+- Username
+- Access to detailed employee information
+
+### Creating a New Employee
+
+From the employee list, click "Register new employee".
+
+Required information:
+
+- First name
+- Last name
+- Password
+
+> The system **automatically generates and validates** usernames to prevent duplicates.
+
+### Employee Details
+
+Click "Employee Info" to view detailed information about a specific employee.
+
+## Order Management
+
+### Viewing Orders
+
+Navigate to:
+```
+/rapidex/orders
+```
+
+This screen displays all orders, including:
+
+- Assigned products
+- Assigned employee (if any)
+- Preparation date
+- Dispatch date
+
+### Order Details
+
+Click "Order Info" to view detailed information for a specific order.
+
+### Deleting Orders (Admin Override)
+
+**Important**: Orders are automatically removed once they are completed (assigned employee, preparation date, and dispatch date).
+
+However, administrators can force-delete an order in exceptional cases such as:
+
+- Faulty orders
+- Test data cleanup
+
+A confirmation dialog is shown before deletion.
+
+## Product Management
+
+### Viewing Products
+
+Navigate to:
+```
+/rapidex/products
+```
+
+This section displays all available products stored in the warehouse.
+
+### Creating a Product
+
+Click "Register new product".
+
+Available product categories are dynamically loaded from the database:
+
+- Electronics
+- Furniture
+- Peripherals
+
+Products can be created without an image, allowing image URLs to be added later.
+
+### Editing Products
+
+Products can be edited at any time to update:
+
+- Name
+- Category
+- Description
+- Image URL
+
+### Deleting Products
+
+Products can be permanently removed from the system if they are no longer available or have been discontinued.
+
+## Architecture Notes
+
+- The web interface uses Spring MVC + Thymeleaf
+- The Android application consumes a separate REST API
+- Both layers share the same service and repository logic
+- Business rules are enforced at the service level, not in the UI.
